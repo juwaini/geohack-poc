@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+    <br />
+    <nav  aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">SEGY</li>
+        </ol>
+    </nav>
+    </div>
+
+
+<h2>Segy Data</h2>
+
+    <div>
+    <select id='folder-select'>
+        <option value="">---PLEASE SELECT YOUR SEGY FOLDER---</option>
+        {% for l in segy_folders  %}
+        <option value="{{l}}">{{l}}</option>
+        {% endfor %}
+    </select>
+    <select id='file-select'>
+    </select>
+    </div>
+
+    <br />
+    <div>
+        <img src="https://i.ibb.co/Tv06xPW/Screenshot-2019-10-27-at-10-50-21-AM.png">
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+    $('#file-select').hide();
+});
+
+$('#folder-select').change( function() {
+    folder_selected = $('#folder-select').val();
+    if (folder_selected  === '')
+    {
+        $('#file-select').hide();
+    }
+    else
+    {
+        folders = {{ segy_folders | safe }};
+        $('#file-select').html('');
+        $('#file-select').hide();
+        $('#file-select').append(folders[folder_selected]).show();
+    }
+        // location.href = location.href.split('?')[0]  + '?select=' + $('#data-select').val();
+
+});
+</script>
+{% endblock script %}

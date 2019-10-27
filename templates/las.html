@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div>
+    <br />
+    <nav  aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">LAS</li>
+        </ol>
+    </nav>
+    </div>
+
+    <h2>LAS Data</h2>
+
+    <div>
+    <select id='data-select'>
+        <option value="">---PLEASE SELECT YOUR LAS DATA---</option>
+        {% for l in las_data %}
+        <option value="{{l}}">{{l}}</option>
+        {% endfor %}
+    </select>
+    </div>
+
+    {% if chart %}
+    <div>
+        <img src="{{ chart }}">
+    </div>
+    {% endif %}
+
+{% endblock content %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+    //alert('Hello world!');
+});
+
+$('#data-select').change( function(){
+
+    console.log($('#data-select').val());
+    location.href = location.href.split('?')[0]  + '?select=' + $('#data-select').val();
+
+});
+</script>
+{% endblock script %}
